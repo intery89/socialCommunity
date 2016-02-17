@@ -131,7 +131,7 @@
 
 
 	<!--其他配置文件-->
-	<!--<import resource="spring-config-datasources.xml"/>-->
+	<import resource="spring-config-datasources.xml"/>
 	<!--<import resource="spring-config-dao.xml"/>-->
 	<import resource="/spring-config-service.xml"/>
 	<import resource="/spring-config-redis.xml" />

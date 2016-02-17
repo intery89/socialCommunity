@@ -15,6 +15,11 @@
 
     <dependencies>
         <dependency>
+	      <groupId>org.springframework</groupId>
+	      <artifactId>spring-tx</artifactId>
+	      <version>${org.springframework.version}</version>
+	    </dependency>
+        <dependency>
             <groupId>com.wwb.demo.domain</groupId>
             <artifactId>com-wwb-demo-domain</artifactId>
             <version>1.0.0</version>
