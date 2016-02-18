@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xmlns:aop="http://www.springframework.org/schema/aop"
-	   xmlns:tx="http://www.springframework.org/schema/tx"
-	   xmlns:context="http://www.springframework.org/schema/context"
-	   xmlns:mvc="http://www.springframework.org/schema/mvc"
-	   xsi:schemaLocation="
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
           http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
           http://www.springframework.org/schema/tx
@@ -17,124 +17,46 @@
 	    	http://www.springframework.org/schema/mvc
 	    	http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd" default-autowire="byName">
 
-	<context:property-placeholder location="classpath:demo.properties" />
+    <context:property-placeholder location="classpath:demo.properties"/>
 
-	<tx:annotation-driven transaction-manager="transactionManager" />
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
-	<!--applicationContextHelper-->
+    <!--applicationContextHelper-->
 
-	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 
-	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
 
-	<mvc:annotation-driven >
-		<mvc:message-converters>
-			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
-				<property name="supportedMediaTypes">
-					<list>
-						<value>text/plain;charset=UTF-8</value>
-					</list>
-				</property>
-			</bean>
-		</mvc:message-converters>
-	</mvc:annotation-driven>
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/plain;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
 
-	<context:component-scan base-package="com.wwb.demo.service">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
-	</context:component-scan>
+    <context:component-scan base-package="com.wwb.demo.service">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
 
-	<context:component-scan base-package="com.wwb.demo.controller">
-		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
-		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
-	</context:component-scan>
+    <context:component-scan base-package="com.wwb.demo.controller">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Service"/>
+    </context:component-scan>
 
-	<!--&lt;!&ndash; static resources &ndash;&gt;-->
-	<!--<mvc:resources location="/static/" mapping="/static/**" cache-period="864000" />-->
-	<!--&lt;!&ndash; static resources end &ndash;&gt;-->
-
-	<!--&lt;!&ndash;Interceptor&ndash;&gt;-->
-	<!--<mvc:interceptors>-->
-
-	<!--</mvc:interceptors>-->
-	<!--&lt;!&ndash; interceptors end &ndash;&gt;-->
-
-	<!--&lt;!&ndash;requestPathExcluder&ndash;&gt;-->
-	<!--<bean id="requestPathExcluder" class="com.iyunxiao.dora.dingdang.web.common.RequestPathExcluder">-->
-		<!--<property name="excludePath" value="${loginContextExcludePath}"/>-->
-	<!--</bean>-->
-
-	<!--&lt;!&ndash; template view &ndash;&gt;-->
-	<!--<bean id="velocityConfig"-->
-		  <!--class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">-->
-		<!--<property name="resourceLoaderPath" value="/WEB-INF/views/" />-->
-		<!--<property name="velocityProperties">-->
-			<!--<props>-->
-				<!--<prop key="input.encoding">UTF-8</prop>-->
-				<!--<prop key="output.encoding">UTF-8</prop>-->
-				<!--<prop key="contentType">text/html;charset=UTF-8</prop>-->
-				<!--<prop key="velocimacro.library">macros/macro.vm</prop>-->
-			<!--</props>-->
-		<!--</property>-->
-	<!--</bean>-->
-
-	<!--<bean id="velocityViewResolver"-->
-		  <!--class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">-->
-		<!--<property name="layoutUrl" value="layout/layout.vm" />-->
-		<!--<property name="cache" value="false" />-->
-		<!--<property name="suffix" value=".vm" />-->
-		<!--<property name="exposeSpringMacroHelpers" value="true" />-->
-		<!--<property name="dateToolAttribute" value="dateTool" />-->
-		<!--<property name="numberToolAttribute" value="numberTool" />-->
-		<!--<property name="contentType" value="text/html;charset=UTF-8" />-->
-	<!--</bean>-->
-
-	<!--<bean id="localeResolver"-->
-		  <!--class="org.springframework.web.servlet.i18n.CookieLocaleResolver">-->
-		<!--<property name="cookieName" value="_clientlocale" />-->
-		<!--<property name="defaultLocale" value="zh_CN" />-->
-		<!--<property name="cookieMaxAge" value="2147483647" />-->
-	<!--</bean>-->
-
-	<!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
-		<!--<property name="maxUploadSize" value="50000000" />-->
-	<!--</bean>-->
-
-	<!--<bean id="viewHelper" class="com.iyunxiao.dora.dingdang.web.utils.ViewHelper">	</bean>-->
-
-	<!--&lt;!&ndash;&ndash;&gt;-->
-	<!--<bean id="loginFilter" class="com.iyunxiao.dora.dingdang.web.filter.LoginFilter"></bean>-->
-
-	<!--&lt;!&ndash;desSecurity&ndash;&gt;-->
-	<!--<bean id="desSecurity" class="com.iyunxiao.dora.dingdang.utils.security.DesSecurityImpl">-->
-		<!--<constructor-arg index="0" value="${desSecurity.defaultKey}"></constructor-arg>-->
-		<!--<constructor-arg index="1" value="${desSecurity.messionKey}"></constructor-arg>-->
-	<!--</bean>-->
-
-	<!--&lt;!&ndash;desSecurityComponent&ndash;&gt;-->
-	<!--<bean id="desSecurityComponent" class="com.iyunxiao.dora.dingdang.utils.security.DesSecurityComponent">-->
-		<!--<property name="desSecurity" ref="desSecurity"></property>-->
-	<!--</bean>-->
-
-	<!--&lt;!&ndash;CacheConfig&ndash;&gt;-->
-	<!--<bean id="webCache" class="com.iyunxiao.dora.dingdang.utils.caching.CacheByEhcache">-->
-		<!--<constructor-arg name="cacheName" value="${web.cache.name}"></constructor-arg>-->
-	<!--</bean>-->
-
-	<!--&lt;!&ndash;LoginCookie&ndash;&gt;-->
-	<!--<bean id="loginCookie" class="com.iyunxiao.dora.dingdang.web.LoginCookie">-->
-		<!--<constructor-arg name="loginCookieDomain" value="${login.cookie.domain}"/>-->
-		<!--<constructor-arg name="loginCookieName" value="${login.cookie.name}"/>-->
-		<!--<constructor-arg name="loginCookieExpiry" value="${login.cookie.expiry}"/>-->
-		<!--<constructor-arg name="desSecurityComponent" ref="desSecurityComponent"/>-->
-	<!--</bean>-->
-
-
-	<!--其他配置文件-->
-	<!--<import resource="spring-config-datasources.xml"/>-->
-	<!--<import resource="spring-config-dao.xml"/>-->
-	<import resource="/spring-config-service.xml"/>
-	<import resource="/spring-config-redis.xml" />
-	<import resource="/spring-config-cache.xml" />
-	<import resource="/spring-config-dao.xml" />
+    <!--其他配置文件-->
+    <import resource="spring-config-datasources.xml"/>
+    <import resource="spring-config-dao.xml"/>
+    <import resource="spring-config-service.xml"/>
+    <import resource="spring-config-redis.xml"/>
+    <import resource="spring-config-cache.xml"/>
+    <import resource="spring-config-dao.xml"/>
 </beans>
