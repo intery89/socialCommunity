@@ -7,8 +7,8 @@
         <id name="id" column="USER_ID">
             <generator class="native"/>
         </id>
-        <property name="username" column="USERNAME" />
-        <property name="password" column="PASSWORD" />
-        <property name="email" column="EMAIL" />
-    </class> 
+        <property name="username" column="USERNAME"/>
+        <property name="password" column="PASSWORD"/>
+        <property name="email" column="EMAIL"/>
+    </class>
 </hibernate-mapping>

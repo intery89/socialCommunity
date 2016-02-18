@@ -1,6 +1,6 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         xmlns="http://java.sun.com/xml/ns/javaee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
     <display-name>wwb-demo-client</display-name>
@@ -39,8 +39,8 @@
         <filter-name>authFilter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
         <!--<init-param>-->
-            <!--<param-name>targetBeanName</param-name>-->
-            <!--<param-value>loginFilter</param-value>-->
+        <!--<param-name>targetBeanName</param-name>-->
+        <!--<param-value>loginFilter</param-value>-->
         <!--</init-param>-->
     </filter>
     <filter-mapping>
@@ -52,7 +52,7 @@
         <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
     </listener>
     <!--<listener>-->
-        <!--<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>-->
+    <!--<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>-->
     <!--</listener>-->
     <!-- cas end -->
 
