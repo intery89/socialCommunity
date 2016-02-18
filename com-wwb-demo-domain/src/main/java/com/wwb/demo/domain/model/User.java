@@ -1,4 +1,4 @@
-package com.wwb.demo.domain;
+package com.wwb.demo.domain.model;
 
 
 public class User {
