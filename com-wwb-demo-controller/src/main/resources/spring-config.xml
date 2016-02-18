@@ -136,5 +136,5 @@
 	<import resource="/spring-config-service.xml"/>
 	<import resource="/spring-config-redis.xml" />
 	<import resource="/spring-config-cache.xml" />
-	<import resource="/spring-config-dao.xml" />
+	<import resource="/src/main/resources/spring-config-dao.xml" />
 </beans>
