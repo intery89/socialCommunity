@@ -1,4 +1,4 @@
-package com.wwb.demo.controller;
+package com.wwb.demo.dao;
 
 import org.apache.log4j.Logger;
 

@@ -1,7 +1,15 @@
 package com.wwb.demo.domain.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users")
 
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private int id;
     private String username;
     private String password;

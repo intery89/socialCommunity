@@ -18,15 +18,18 @@
 	    	http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd" default-autowire="byName">
 
     <context:property-placeholder location="classpath:demo.properties"/>
-
     <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+    <aop:aspectj-autoproxy/>
+    <context:annotation-config/>
 
     <!--applicationContextHelper-->
 
-    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
+    <!--<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>-->
 
-    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+    <!--<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>-->
+    <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>-->
 
     <mvc:annotation-driven>
         <mvc:message-converters>
@@ -39,18 +42,8 @@
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+    <context:component-scan base-package="com.wwb.demo" />
 
-    <context:component-scan base-package="com.wwb.demo.service">
-        <context:include-filter type="annotation"
-                                expression="org.springframework.stereotype.Service"/>
-    </context:component-scan>
-
-    <context:component-scan base-package="com.wwb.demo.controller">
-        <context:include-filter type="annotation"
-                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
-        <context:exclude-filter type="annotation"
-                                expression="org.springframework.stereotype.Service"/>
-    </context:component-scan>
 
     <!--其他配置文件-->
     <import resource="spring-config-datasources.xml"/>

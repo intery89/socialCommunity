@@ -3,7 +3,8 @@ package com.wwb.demo.dao;
 import java.util.List;
 
 import com.wwb.demo.domain.model.User;
+import org.springframework.stereotype.Repository;
 
-public interface UserDao {
-    public List<User> list();
+@Repository
+public class UserDao extends BaseDao<User>{
 }
