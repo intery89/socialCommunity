@@ -1,4 +1,4 @@
-package com.wwb.demo.dao;
+package com.wwb.demo.controllor;
 
 import org.junit.After;
 import org.junit.Before;

@@ -3,7 +3,6 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="
           http://www.springframework.org/schema/beans
@@ -13,11 +12,8 @@
           http://www.springframework.org/schema/context
           http://www.springframework.org/schema/context/spring-context-3.0.xsd
           http://www.springframework.org/schema/aop
-          http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-	    	http://www.springframework.org/schema/mvc
-	    	http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd" default-autowire="byName">
+          http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-    <context:property-placeholder location="classpath:demo.properties"/>
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
 
@@ -30,25 +26,9 @@
 
     <!--<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>-->
     <!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>-->
-
-    <mvc:annotation-driven>
-        <mvc:message-converters>
-            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-                <property name="supportedMediaTypes">
-                    <list>
-                        <value>text/plain;charset=UTF-8</value>
-                    </list>
-                </property>
-            </bean>
-        </mvc:message-converters>
-    </mvc:annotation-driven>
     <context:component-scan base-package="com.wwb.demo" />
 
 
     <!--其他配置文件-->
     <import resource="spring-config-datasources.xml"/>
-    <import resource="spring-config-dao.xml"/>
-    <import resource="spring-config-service.xml"/>
-    <import resource="spring-config-redis.xml"/>
-    <import resource="spring-config-cache.xml"/>
 </beans>

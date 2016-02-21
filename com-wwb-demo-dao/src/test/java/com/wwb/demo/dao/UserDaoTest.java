@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
  * Created by xiaoai on 2016/2/21.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "classpath:spring-config.xml"})
+@ContextConfiguration({ "classpath:spring-config-dao-test.xml"})
 @TransactionConfiguration(defaultRollback = false)
 public class UserDaoTest {
     @Autowired
@@ -23,7 +23,6 @@ public class UserDaoTest {
     @Transactional
     public void addUser(){
         User user = new User();
-        user.setId(1);
         user.setEmail("saobian@162.com");
         user.setUsername("saobian");
         user.setPassword("wohensao");

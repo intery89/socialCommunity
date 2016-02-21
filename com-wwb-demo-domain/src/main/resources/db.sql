@@ -1,4 +1,4 @@
-create database usersdb;
+create database wwwb;
  
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
