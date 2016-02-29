@@ -8,5 +8,6 @@ this is the demo architecture for all the web application which will be develope
 + maven 3.2.3
 + the version of log4j should be updated into 2.0
 + hibernate 4.3.5 Final
++ spring-security-web 4.0.3.RELEASE
 
 
