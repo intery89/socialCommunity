@@ -10,4 +10,9 @@ this is the demo architecture for all the web application which will be develope
 + hibernate 4.3.5 Final
 + spring-security-web 4.0.3.RELEASE
 
+# Demo
+
++ run with tomcat8
++ go to <http://localhost:8080/demo/view>
+
 
