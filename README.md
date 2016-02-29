@@ -9,4 +9,9 @@ this is the demo architecture for all the web application which will be develope
 + the version of log4j should be updated into 2.0
 + hibernate 4.3.5 Final
 
+# Demo
+
++ run with tomcat8
++ go to <http://localhost:8080/demo/view>
+
 
