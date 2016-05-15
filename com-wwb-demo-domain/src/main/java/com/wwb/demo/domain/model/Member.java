@@ -1,8 +1,11 @@
 package com.wwb.demo.domain.model;
 
 import javax.persistence.*;
+import java.util.List;
 
-
+/**
+ * 会员信息实体类，包括买家和卖家
+ */
 @Entity
 @Table(name = "member")
 public class Member extends BaseEntity {
@@ -15,10 +18,6 @@ public class Member extends BaseEntity {
 
     @Column(name = "email")
     private String email;
-
-
-    @Column(name = "zipCode")
-    private String zipCode;
 
     @Column(name = "phone")
     private String phone;
@@ -39,13 +38,16 @@ public class Member extends BaseEntity {
     /**
      * 注册用户所在省市县
      */
-    @ManyToOne( fetch = FetchType.LAZY,cascade = {CascadeType.REFRESH})
+    @ManyToOne( fetch = FetchType.LAZY,cascade = {CascadeType.PERSIST})
     @JoinColumn(name="areaId")
     private Area area;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "memberCertificateId")
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "registerMember")
     private MemberCertificate memberCertificate;
+
+
+    @OneToMany( fetch = FetchType.LAZY,cascade = {CascadeType.ALL},mappedBy = "member")
+    private List<Receiver> receivers;
 
     public String getUserName() {
         return userName;
@@ -71,14 +73,6 @@ public class Member extends BaseEntity {
         this.email = email;
     }
 
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -102,4 +96,6 @@ public class Member extends BaseEntity {
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
+
+
 }

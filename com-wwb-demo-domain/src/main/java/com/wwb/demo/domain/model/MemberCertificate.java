@@ -23,8 +23,8 @@ public class MemberCertificate extends BaseEntity {
     /**
      * 审核备注
      */
-    @Column(name = "verifyStatus")
-    private int verifyNote;
+    @Column(name = "verifyNote")
+    private String verifyNote;
 
     /**
      * 认证人的身份证号码
@@ -79,7 +79,8 @@ public class MemberCertificate extends BaseEntity {
     /**
      * 对应的注册用户id
      */
-    @OneToOne(mappedBy = "memberCertificate")
+    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId")
     private Member registerMember;
 
     public String getRealName() {
@@ -98,11 +99,11 @@ public class MemberCertificate extends BaseEntity {
         this.verifyStatus = verifyStatus;
     }
 
-    public int getVerifyNote() {
+    public String getVerifyNote() {
         return verifyNote;
     }
 
-    public void setVerifyNote(int verifyNote) {
+    public void setVerifyNote(String verifyNote) {
         this.verifyNote = verifyNote;
     }
 

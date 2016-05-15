@@ -1,4 +1,7 @@
 package com.wwb.demo.domain.model;
+/**
+ * 关于省份地区实体类
+ */
 
 import javax.persistence.*;
 import java.util.HashSet;
