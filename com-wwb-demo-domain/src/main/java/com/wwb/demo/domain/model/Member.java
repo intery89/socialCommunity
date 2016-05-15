@@ -97,5 +97,35 @@ public class Member extends BaseEntity {
         this.mobile = mobile;
     }
 
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
+    public MemberCertificate getMemberCertificate() {
+        return memberCertificate;
+    }
+
+    public void setMemberCertificate(MemberCertificate memberCertificate) {
+        this.memberCertificate = memberCertificate;
+    }
+
+    public List<Receiver> getReceivers() {
+        return receivers;
+    }
+
+    public void setReceivers(List<Receiver> receivers) {
+        this.receivers = receivers;
+    }
 }
