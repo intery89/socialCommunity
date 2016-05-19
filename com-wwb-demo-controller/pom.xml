@@ -89,6 +89,16 @@
             <version>1.3</version>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.7.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.7.4</version>
+        </dependency>
+        <dependency>
             <groupId>com.wwb.demo.domain</groupId>
             <artifactId>com-wwb-demo-domain</artifactId>
             <version>1.0.0</version>
