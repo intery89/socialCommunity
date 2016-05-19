@@ -10,6 +10,9 @@ import java.util.List;
 @Table(name = "member")
 public class Member extends BaseEntity {
 
+    public Member(){
+
+    }
     @Column(name = "userName")
     private String userName;
 

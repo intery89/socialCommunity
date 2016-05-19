@@ -10,13 +10,14 @@ public class ResultResponse<T> {
 
     }
 
-    public ResultResponse(ResultResponseCode resultResponseCode , T data) {
+    public ResultResponse(ResultResponseCode resultResponseCode, T data) {
         this.status = new Status();
         this.status.setCode(resultResponseCode.getCode());
         this.status.setMsg(resultResponseCode.getMsg());
         this.result = new Result();
         this.result.setData(data);
     }
+
     public Status getStatus() {
         return status;
     }
@@ -33,4 +34,7 @@ public class ResultResponse<T> {
         this.result = result;
     }
 
+    public boolean isSuccess() {
+        return status != null && status.getCode().equals(ResultResponseCode.SUCCESS.getCode());
+    }
 }
