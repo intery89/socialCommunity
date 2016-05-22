@@ -2,10 +2,4 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
         "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
-
-	<!--<bean id="userDao" class="com.wwb.demo.dao.impl.UserDAOImpl">-->
-	    <!--<constructor-arg>-->
-	        <!--<ref bean="sessionFactory" />-->
-	    <!--</constructor-arg>-->
-	<!--</bean>-->
 </beans>

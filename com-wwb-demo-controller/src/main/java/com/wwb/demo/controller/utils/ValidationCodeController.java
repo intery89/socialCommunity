@@ -1,7 +1,5 @@
 package com.wwb.demo.controller.utils;
 
-import com.wwb.demo.utils.ValidationCodeGenerator;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

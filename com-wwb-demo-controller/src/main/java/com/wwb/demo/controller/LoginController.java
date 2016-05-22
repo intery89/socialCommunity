@@ -1,69 +1,82 @@
 package com.wwb.demo.controller;
 
+import com.wwb.demo.domain.model.LoginForm;
+import com.wwb.demo.service.impl.LoginService;
+import com.wwb.demo.utils.result.ResultResponse;
+import com.wwb.demo.utils.result.enums.ResultResponseCode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Intery on 2016/5/15.
  */
 @Controller
-@RequestMapping("login.do")
-public class LoginController{
+public class LoginController {
 
-    private String FAIL = "fail";
-    private String email;
-    private String password;
+    private static final String pic = "pic/";
 
-    InfouserManager infousermanager;
+    @Autowired
+    LoginService loginService;
 
-    public LoginController() {
-        // TODO Auto-generated constructor st
-    }
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultResponse login(@RequestBody LoginForm user, HttpSession session) {
+        String username = user.getUsername();
+        String password = user.getPassword();
 
-    public String execute(){
-        //��ȡһ����̬��ActionContextʵ��
-        ActionContext acx = ActionContext.getContext();
-        System.out.println(email);
-        System.out.println(password);
-        Integer flag = infousermanager.verify(email.trim(),password.trim());
-        if(flag!=0){
-            acx.getSession().put(EriqooConstant.USER, email);
-            acx.getSession().put(EriqooConstant.STATE, "�ѵ�¼");
-            acx.getSession().put(EriqooConstant.userID, flag);
-            return SUCCESS;
-        }else{
-            return FAIL;
+        ResultResponse resultResponse = loginService.checkUserIdentification(username, password);
+
+        if (resultResponse.getStatus().getCode().equals(ResultResponseCode.SUCCESS.getCode())) {
+            //需要将member的相关数据放入到session中
+            return resultResponse;
+        } else if (resultResponse.getStatus().getCode().equals(ResultResponseCode.USERNAME_PASSWORD_ERROR.getCode())) {
+            return resultResponse;
+        } else {
+            //抛出异常或者是其他错误
+            return resultResponse;
         }
     }
 
-    public String getEmail() {
-        return email;
+    @ResponseBody
+    @RequestMapping(value = "/generateValidateCode")
+    public Map<String, String> generateValidationCode(HttpSession session) {
+        Map<String, String> result = new HashMap<String, String>();
+        try {
+            List<String> codeAndPath = ValidationCodeGenerator.generateCode(pic);
+            session.setAttribute("code", codeAndPath.get(1));
+            result.put("path", codeAndPath.get(2));
+            return result;
+        } catch (IOException e) {
+            e.printStackTrace();
+            session.setAttribute("code", "");
+            String path = pic + "default.jpg";
+            result.put("path", path);
+            return result;
+        }
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    @RequestMapping(value = "/checkValidateCode", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> generateValidationCode(@RequestBody Map<String, String> inputCode, HttpSession session) {
+        Map<String, String> result = new HashMap<String, String>();
+        try {
+            String code = (String) session.getAttribute("code");
+            if (code.equalsIgnoreCase(inputCode.get("code"))) {
+                result.put("result", "success");
+                return result;
+            }
+            result.put("result", "false");
+            return result;
+        } catch (Exception e) {
+            result.put("result", "false");
+            return result;
+        }
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-
-    public InfouserManager getInfousermanager() {
-        return infousermanager;
-    }
-
-
-
-    public void setInfousermanager(InfouserManager infousermanager) {
-        this.infousermanager = infousermanager;
-    }
-
 }

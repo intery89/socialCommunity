@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>this is the html title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv='Cache-Control' content='no-cache'/>
+
+    <meta name="keywords" content="this is the html keywords"/>
+
+    <link href="/static/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/common.css?20160229" rel="stylesheet">
+##    site icon
+    <link rel="icon" href="/static/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/static/img/favicon.ico"/>
+
+    <script type="text/javascript" src="/static/js/jquery-1.12.1.min.js" Charset="UTF-8"></script>
+##    <script type="text/javascript" src="/static/js/broswercheck.js"></script>
+    <script type="text/javascript" src="/static/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/common.js"></script>
+    $!{header}
+</head>
+<body>
+## nav-bar
+<div id="nav">
+
+</div>
+<div id="divbody">
+    <div class="container" id="divcon">
+        $screen_content
+    </div>
+</div>
+<div id="footer" class="footer">
+##    <div class="footer-inner container">
+##        <a class="footer-link" href="/about" target="_self">关于云校排课</a>
+##        <a class="footer-link" href="/help" target="_self" style="margin-left: 6px">使用技巧</a>
+##
+##        <p>© 2014 <a href="http://www.yunxiao.com/">Yunxiao Inc.</a> All rights reserved.云校出品 </p>
+##    </div>
+</div>
+</body>
+    $!{footer}
+</html>
