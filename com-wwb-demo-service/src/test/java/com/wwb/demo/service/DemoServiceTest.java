@@ -7,8 +7,4 @@ import org.junit.Before;
  */
 public class DemoServiceTest {
 
-    @Before
-    public void setUp() throws Exception {
-
-    }
 }

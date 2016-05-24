@@ -131,4 +131,20 @@ public class Member extends BaseEntity {
     public void setReceivers(List<Receiver> receivers) {
         this.receivers = receivers;
     }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberCertificate=" + memberCertificate +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", type='" + type + '\'' +
+                ", area=" + area +
+                ", receivers=" + receivers +
+                '}';
+    }
 }

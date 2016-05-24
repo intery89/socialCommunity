@@ -61,7 +61,7 @@ public class LoginService {
         if (!resultResponse.isSuccess()) {
             return resultResponse;
         }
-        resultResponse = ValidateFieldUtil.passwordValidation(userVo.getPassWord());
+        resultResponse = ValidateFieldUtil.passwordValidation(userVo.getPassword());
         if (!resultResponse.isSuccess()) {
             return resultResponse;
         }

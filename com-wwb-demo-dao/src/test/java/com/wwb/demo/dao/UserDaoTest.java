@@ -87,12 +87,10 @@ public class UserDaoTest {
     }
 
     @Test
-    public void test(){
-        Pattern pattern = Pattern.compile("^[0-9a-zA-Z_]{1,}$");
-        Matcher matcher = pattern.matcher("啊");
-        boolean b= matcher.matches();
-        System.out.println(b);
+    public void testMobile(){
+
     }
+
 
 
 }
