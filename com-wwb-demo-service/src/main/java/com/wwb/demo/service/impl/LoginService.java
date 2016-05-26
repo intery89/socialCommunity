@@ -9,12 +9,14 @@ import com.wwb.demo.utils.result.ResultResponse;
 import com.wwb.demo.utils.result.enums.ResultResponseCode;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by Intery on 2016/5/15.
  */
+@Service
 public class LoginService {
 
     @Autowired
