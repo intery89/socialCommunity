@@ -22,7 +22,4 @@ public class MemberDao extends BaseDao<Member> {
         query.setMaxResults(1);
         return query.getSingleResult()==null ? true : false;
     }
-
-
-
 }
