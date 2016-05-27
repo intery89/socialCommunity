@@ -45,41 +45,7 @@
     <context:component-scan base-package="com.wwb.demo"/>
     <!--static resource -->
     <mvc:resources mapping="/static/**" location="/static/" cache-period="864000"/>
-    <!--static resource -->
 
-    <!-- template view -->
-    <bean id="velocityConfig"
-          class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-        <property name="resourceLoaderPath" value="/WEB-INF/views/"/>
-        <property name="velocityProperties">
-            <props>
-                <prop key="input.encoding">UTF-8</prop>
-                <prop key="output.encoding">UTF-8</prop>
-                <prop key="contentType">text/html;charset=UTF-8</prop>
-                <prop key="velocimacro.library">macros/macro.vm</prop>
-            </props>
-        </property>
-    </bean>
-    <bean id="velocityViewResolver"
-          class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
-        <property name="layoutUrl" value="layout/layout.vm"/>
-        <property name="cache" value="false"/>
-        <property name="suffix" value=".vm"/>
-        <property name="exposeSpringMacroHelpers" value="true"/>
-        <property name="dateToolAttribute" value="dateTool"/>
-        <property name="numberToolAttribute" value="numberTool"/>
-        <property name="contentType" value="text/html;charset=UTF-8"/>
-    </bean>
-    <bean id="localeResolver"
-          class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-        <property name="cookieName" value="_clientlocale"/>
-        <property name="defaultLocale" value="zh_CN"/>
-        <property name="cookieMaxAge" value="2147483647"/>
-    </bean>
-    <bean id="multipartResolver"
-          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="50000000"/>
-    </bean>
 
     <!--其他配置文件-->
     <import resource="classpath:spring-config-dao.xml"/>
@@ -87,5 +53,9 @@
     <import resource="classpath:spring-config-redis.xml"/>
     <import resource="classpath:spring-config-cache.xml"/>
     <import resource="classpath:spring-config-datasources.xml"/>
-
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/base/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <mvc:default-servlet-handler/>
 </beans>
