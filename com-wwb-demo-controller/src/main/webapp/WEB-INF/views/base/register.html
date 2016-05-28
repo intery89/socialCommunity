@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <script type="text/javascript" src="static/js/jquery-2.2.4.js"></script>
+    <script>
+        $(document).ready(function () {
+            getVerifyCode();
+            $("#register").click(function () {
+                alert("1111");
+            });
+            $("#username").blur(function () {
+                var userName = $("#username").val();
+                var url = getRootPath() + "/" + "checkUserName";
+                $.ajax({
+                    type: 'post',
+                    data: {userName: userName},
+                    'url': url,
+                    success: function (data) {
+                        $("#usernameCheck").empty();
+                        if (data.status.code != "0000000") {
+                            $("#usernameCheck").text(data.status.msg);
+                        } else {
+                            $("#usernameCheck").empty();
+                        }
+
+                    }
+                });
+
+            });
+        });
+        function getVerifyCode() {
+            $.ajax({
+                type: 'post',
+                'url': getRootPath() + "/generateValidateCode",
+                success: function (data) {
+                    var imagePath = getRootPath() + "/" + data.path;
+                    $("#pic").attr("src", imagePath);
+                }
+            });
+        }
+        function getRootPath() {
+            //获取当前网址，如： http://localhost:8083/proj/meun.jsp
+            var curWwwPath = window.document.location.href;
+            //获取主机地址之后的目录，如： proj/meun.jsp
+            var pathName = window.document.location.pathname;
+            var pos = curWwwPath.indexOf(pathName);
+            //获取主机地址，如： http://localhost:8083
+            var localhostPath = curWwwPath.substring(0, pos);
+            //获取带"/"的项目名，如：/proj
+            var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+            return (localhostPath + projectName);
+        }
+    </script>
+</head>
+<body>
+<form method="post" id="mainform">
+    <label for="username">&nbsp;用户名</label>
+    <input type="text" name="username" id="username" value=""/> <label id="usernameCheck"></label> </br>
+    <label for="email">&nbsp;&nbsp;邮箱</label>
+    <input type="text" name="email" value=""/><label id="checkEmail"></label></br>
+    <label for="password">&nbsp;&nbsp;密码</label>
+    <input type="password" name="password" value=""/><label id="checkPassword"></label></br>
+    <label for="repeatPassword">确认密码</label>
+    <input type="password" name="repeatPassword" value=""/></br>
+    <label for="verifyCode">验证码:</label>
+    <input type="text" name="code" value=""/>
+    <img src=imagePath onclick="getVerifyCode();" id="pic" title="看不清，再来一张"/></br>
+    <input type="submit" name="action" id="register" value="注册"/></br>
+</form>
+</body>
+</html>
