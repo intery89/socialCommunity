@@ -55,7 +55,7 @@
     <import resource="classpath:spring-config-datasources.xml"/>
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="internalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/base/"/>
-        <property name="suffix" value=".jsp"/>
+        <property name="suffix" value=".html"/>
     </bean>
     <mvc:default-servlet-handler/>
 </beans>
