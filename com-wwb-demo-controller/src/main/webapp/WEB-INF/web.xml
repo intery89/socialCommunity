@@ -35,6 +35,9 @@
         <servlet-name>controller</servlet-name>
     </filter-mapping>
 
+	  <welcome-file-list>
+	    <welcome-file>/welcome.html</welcome-file>
+	  </welcome-file-list>
 
     <listener>
         <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
@@ -52,6 +55,5 @@
         <servlet-name>controller</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
 
 </web-app>

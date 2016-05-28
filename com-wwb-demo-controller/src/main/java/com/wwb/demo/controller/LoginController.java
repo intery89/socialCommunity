@@ -33,7 +33,7 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    @RequestMapping("/register")
+    @RequestMapping("/frontPage")
     public String hello() {
         return "register";
     }
@@ -119,4 +119,5 @@ public class LoginController {
             return result;
         }
     }
+    
 }
