@@ -1,20 +1,24 @@
 package com.wwb.demo.controller;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.wwb.demo.domain.model.LoginForm;
 import com.wwb.demo.service.impl.LoginService;
 import com.wwb.demo.utils.ValidationCodeGenerator;
 import com.wwb.demo.utils.result.ResultResponse;
 import com.wwb.demo.utils.result.enums.ResultResponseCode;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Intery on 2016/5/15.
@@ -22,8 +26,9 @@ import java.util.Map;
 @Controller
 public class LoginController {
 
-    private static final String pic = "pic/";
-
+    private static final String pic = "/static/code/";
+    private static final Map<String, String> mockCache = new HashMap<String, String>();
+    
     @Autowired
     LoginService loginService;
 
@@ -53,11 +58,15 @@ public class LoginController {
     @ResponseBody
     @RequestMapping(value = "/generateValidateCode")
     public Map<String, String> generateValidationCode(HttpSession session) {
+    	String realPath = session.getServletContext().getRealPath("/");
         Map<String, String> result = new HashMap<String, String>();
         try {
-            List<String> codeAndPath = ValidationCodeGenerator.generateCode(pic);
-            session.setAttribute("code", codeAndPath.get(1));
-            result.put("path", codeAndPath.get(2));
+            Map<String, String> codeInfo = ValidationCodeGenerator.generateCode(realPath + pic);
+            Map<String, String> code = new HashMap<String, String>();
+            code.put("code", codeInfo.get("code"));
+            code.put("timestamp", String.valueOf(System.currentTimeMillis()));
+            session.setAttribute("code", code);
+            result.put("path", pic + codeInfo.get("picName") + ".jpg");
             return result;
         } catch (IOException e) {
             e.printStackTrace();
@@ -68,19 +77,34 @@ public class LoginController {
         }
     }
 
-    @RequestMapping(value = "/checkValidateCode", method = RequestMethod.POST)
+    @RequestMapping(value = "/checkValidateCode")
     @ResponseBody
-    public Map<String, String> generateValidationCode(@RequestBody Map<String, String> inputCode, HttpSession session) {
+    public Map<String, String> generateValidationCode(@RequestParam String validateCode,HttpSession session) {
         Map<String, String> result = new HashMap<String, String>();
         try {
-            String code = (String) session.getAttribute("code");
-            if (code.equalsIgnoreCase(inputCode.get("code"))) {
+        	Map<String, String> code = null;
+        	if(session.getAttribute("code") instanceof Map){
+        		code = (Map<String, String>) session.getAttribute("code");
+        	}
+        	if(code != null){
+        		long now = System.currentTimeMillis();
+        		long isExpired = now - Long.parseLong(code.get("timestamp"));
+        		// 5 mins expired
+        		if(isExpired > 300000){
+        			code = null;
+        			result.put("result", "expired");
+        			return result;
+        		}
+        	}
+        	
+            if (code.get("code").equalsIgnoreCase(validateCode)) {
                 result.put("result", "success");
                 return result;
             }
             result.put("result", "false");
             return result;
         } catch (Exception e) {
+        	e.printStackTrace();
             result.put("result", "false");
             return result;
         }

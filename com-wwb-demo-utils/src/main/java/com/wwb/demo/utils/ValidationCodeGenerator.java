@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.LinearGradientPaint;
-import java.awt.Paint;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -13,9 +11,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -270,15 +269,16 @@ public class ValidationCodeGenerator {
 
     }
 
-    public static List<String> generateCode(String dir) throws IOException {
-        List<String> codeAndPath = new ArrayList<>();
+    public static Map<String, String> generateCode(String dir) throws IOException {
+    	Map<String, String> codeInfo = new HashMap<String, String>();
         int w = 200, h = 80;
         String verifyCode = generateVerifyCode(4);
-        codeAndPath.add(verifyCode);
-        File file = new File(dir, verifyCode + ".jpg");
+        codeInfo.put("code", verifyCode);
+        String picName = String.valueOf(System.currentTimeMillis()) + generateVerifyCode(5);
+        File file = new File(dir, picName + ".jpg");
         outputImage(w, h, file, verifyCode);
-        codeAndPath.add(file.getAbsolutePath());
-        return codeAndPath;
+        codeInfo.put("picName", picName);
+        return codeInfo;
     }
 
     public static void main(String[] args) throws IOException {
