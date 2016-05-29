@@ -22,4 +22,11 @@ public class MemberDao extends BaseDao<Member> {
         query.setMaxResults(1);
         return query.getSingleResult()==null ? true : false;
     }
+    public boolean isEmailExist(String email) {
+        String Hql = "select id from Member m where m.email=:email";
+        Query query = entityManager.createQuery(Hql);
+        query.setParameter("email", email);
+        query.setMaxResults(1);
+        return query.getSingleResult()==null ? true : false;
+    }
 }

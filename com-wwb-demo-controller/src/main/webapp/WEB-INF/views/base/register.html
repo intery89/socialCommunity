@@ -8,24 +8,48 @@
         $(document).ready(function () {
             getVerifyCode();
             $("#username").blur(function () {
-                var userName = $("#username").val();
-                var url = getRootPath() + "/" + "checkUserName";
-                $.ajax({
-                    type: 'post',
-                    data: {userName: userName},
-                    'url': url,
-                    success: function (data) {
-                        $("#usernameCheck").empty();
-                        if (data.status.code != "0000000") {
-                            $("#usernameCheck").text(data.status.msg);
-                        } else {
-                            $("#usernameCheck").empty();
-                        }
-
-                    }
-                });
+                checkUserName();
+            });
+            $("#email").blur(function () {
+                checkEmail();
             });
         });
+        function checkEmail() {
+            var email = $("#email").val();
+            var url = getRootPath() + "/" + "checkEmail";
+            $.ajax({
+                type: 'post',
+                data: {email: email},
+                'url': url,
+                success: function (data) {
+                    $("#emailCheck").empty();
+                    if (data.status.code != "0000000") {
+                        $("#emailCheck").text(data.status.msg);
+                    } else {
+                        $("#emailCheck").empty();
+                    }
+                }
+            });
+
+        }
+        function checkUserName() {
+            var userName = $("#username").val();
+            var url = getRootPath() + "/" + "checkUserName";
+            $.ajax({
+                type: 'post',
+                data: {userName: userName},
+                'url': url,
+                success: function (data) {
+                    $("#usernameCheck").empty();
+                    if (data.status.code != "0000000") {
+                        $("#usernameCheck").text(data.status.msg);
+                    } else {
+                        $("#usernameCheck").empty();
+                    }
+
+                }
+            });
+        }
         function getVerifyCode() {
             $.ajax({
                 type: 'post',
@@ -47,21 +71,34 @@
             //获取带"/"的项目名，如：/proj
             var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
             return (localhostPath + projectName);
+            -
         }
-        function register(){
-        	var url = getRootPath() + "/" + "register";
-        	var username = $('#username').val();
-        	var password = $('#password').val();
-        	var code = $('#code').val();
-        	var email = $('#email').val();
-        	var data = {userName: username, password: password, email: email, code: code};
+        function register() {
+            var url = getRootPath() + "/" + "register";
+            var username = $('#username').val();
+            var password = $('#password').val();
+            var code = $('#code').val();
+            var email = $('#email').val();
+            var repeatPassword = $('#repeatPassword').val();
+            $("#passwordCheck").empty();
+            if (repeatPassword != password) {
+                $("#passwordCheck").text("俩次输入的密码不一致");
+            }
+            var data = {userName: username, password: password, email: email, code: code,repeatPassword:repeatPassword};
             $.ajax({
                 url: url, type: "POST",
                 dataType: "json",
-                contentType:"application/json",
+                contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function(data){
-                    window.location.href=data;
+                success: function (data) {
+                    $("#registerCheck").empty();
+                    if (data.status.code != "0000000") {
+                        $("#registerCheck").text(data.status.msg);
+                         window.location.href = data;
+                    } else {
+                        $("#registerCheck").empty();
+                        return false;
+                    }
                 }
             });
             return false;
@@ -73,15 +110,15 @@
     <label for="username">&nbsp;用户名</label>
     <input type="text" name="username" id="username" value=""/> <label id="usernameCheck"></label> </br>
     <label for="email">&nbsp;&nbsp;邮箱</label>
-    <input type="text" name="email" id="email" value=""/><label id="checkEmail"></label></br>
+    <input type="text" name="email" id="email" value=""/><label id="emailCheck"></label></br>
     <label for="password">&nbsp;&nbsp;密码</label>
-    <input type="password" name="password" id="password" value=""/><label id="checkPassword"></label></br>
+    <input type="password" name="password" id="password" value=""/><label id="passwordCheck"></label></br>
     <label for="repeatPassword">确认密码</label>
     <input type="password" name="repeatPassword" id="repeatPassword" value=""/></br>
     <label for="verifyCode">验证码:</label>
     <input type="text" name="code" id="code" value=""/>
     <img src="" onclick="getVerifyCode();" id="pic" title="看不清，再来一张"/></br>
-    <input type="button" onclick="register()" name="reg" id="reg" value="注册"/></br>
+    <input type="button" onclick="register()" name="reg" id="reg" value="注册"/><label id="registerCheck"></label></br>
 </form>
 </body>
 </html>

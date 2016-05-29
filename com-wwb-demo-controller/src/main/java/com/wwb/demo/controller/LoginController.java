@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.wwb.demo.service.impl.RegisterService;
 import com.wwb.demo.utils.ValidateFieldUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,11 +28,13 @@ import com.wwb.demo.utils.result.enums.ResultResponseCode;
 @Controller
 public class LoginController {
 
-    private static final String pic = "/static/code/";
+
     private static final Map<String, String> mockCache = new HashMap<String, String>();
 
     @Autowired
     private LoginService loginService;
+
+
 
     @RequestMapping("/frontPage")
     public String hello() {
@@ -39,12 +42,7 @@ public class LoginController {
     }
 
 
-    @RequestMapping(value = "/checkUserName", method = RequestMethod.POST)
-    @ResponseBody
-    public ResultResponse checkUserName(@RequestParam String userName) {
-        System.out.println("------------"+userName);
-        return ValidateFieldUtil.userNameValidation(userName);
-    }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
@@ -64,60 +62,4 @@ public class LoginController {
             return resultResponse;
         }
     }
-
-    @ResponseBody
-    @RequestMapping(value = "/generateValidateCode")
-    public Map<String, String> generateValidationCode(HttpSession session) {
-        String realPath = session.getServletContext().getRealPath("/");
-        Map<String, String> result = new HashMap<String, String>();
-        try {
-            Map<String, String> codeInfo = ValidationCodeGenerator.generateCode(realPath + pic);
-            Map<String, String> code = new HashMap<String, String>();
-            code.put("code", codeInfo.get("code"));
-            code.put("timestamp", String.valueOf(System.currentTimeMillis()));
-            session.setAttribute("code", code);
-            result.put("path", pic + codeInfo.get("picName") + ".jpg");
-            return result;
-        } catch (IOException e) {
-            e.printStackTrace();
-            session.setAttribute("code", "");
-            String path = pic + "default.jpg";
-            result.put("path", path);
-            return result;
-        }
-    }
-
-    @RequestMapping(value = "/checkValidateCode")
-    @ResponseBody
-    public Map<String, String> generateValidationCode(@RequestParam String validateCode, HttpSession session) {
-        Map<String, String> result = new HashMap<String, String>();
-        try {
-            Map<String, String> code = null;
-            if (session.getAttribute("code") instanceof Map) {
-                code = (Map<String, String>) session.getAttribute("code");
-            }
-            if (code != null) {
-                long now = System.currentTimeMillis();
-                long isExpired = now - Long.parseLong(code.get("timestamp"));
-                // 5 mins expired
-                if (isExpired > 300000) {
-                    code = null;
-                    result.put("result", "expired");
-                    return result;
-                }
-            }
-
-            if (code.get("code").equalsIgnoreCase(validateCode)) {
-                result.put("result", "success");
-                return result;
-            }
-            result.put("result", "false");
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.put("result", "false");
-            return result;
-        }
-    }
-    
 }

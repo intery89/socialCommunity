@@ -13,8 +13,12 @@ public enum ResultResponseCode {
     PASSWORD_LENGTH_ERROR("0000005", "密码为6-16个字符!!!"),
     EMAIL_CANNOT_NULL("0000006", "email长度不能为空!!!"),
     EMAIL_FORMAT_ERROR("0000007", "email的格式不对!!!"),
-    MOBILE_CANNOT_NULL("0000008", "手机号码不能为空!!!"),
-    MOBILE_FORMAT_ERROR("0000009", "手机号码格式不对!!!"),
+    EMAIL_IS_NOT_AVAILABLE("0000008", "email已经注册!!!"),
+    MOBILE_CANNOT_NULL("0000009", "手机号码不能为空!!!"),
+    MOBILE_FORMAT_ERROR("0000010", "手机号码格式不对!!!"),
+    MOBILE_IS_NOT_AVAILABLE("0000011", "手机的号码已经注册!!"),
+    CODE_IS_NOT_SAME("0000012", "验证码不正确!!"),
+    PASSWORD_IS_NOT_SAME("0000013", "密码前后不一致!!"),
     SYSTEM_ERROR("0000050", "系统错误");
     /**
      * 返回码

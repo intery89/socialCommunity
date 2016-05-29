@@ -22,17 +22,13 @@ public class LoginService {
     @Autowired
     private MemberDao memberDao;
 
-    public String decipher(String password) {
-        return CipherUtils.convertMD5(CipherUtils.convertMD5(password));
-    }
-
     public ResultResponse checkUserIdentification(String username, String password) {
         ResultResponse resultResponse = null;
         try {
             Member member = memberDao.getMemberByUserName(username);
             if (member != null) {
                 String pwd = member.getPassword();
-                if (pwd.equals(decipher(password))) {
+                if (pwd.equals(CipherUtils.convertMD5(password))) {
                     resultResponse = new ResultResponse(ResultResponseCode.SUCCESS, true);
                 }
             } else {
@@ -42,41 +38,6 @@ public class LoginService {
             resultResponse = new ResultResponse(ResultResponseCode.USERNAME_PASSWORD_ERROR, false);
         }
         return resultResponse;
-    }
-
-    public ResultResponse isUserNameAvailable(String userName) {
-        ResultResponse resultResponse = null;
-        try {
-            boolean isNameExist = memberDao.isUserNameExist(userName);
-            if (!isNameExist) {
-                return new ResultResponse(ResultResponseCode.USERNAME_PASSWORD_ERROR, false);
-            }
-            return ValidateFieldUtil.userNameValidation(userName);
-
-        } catch (Exception e) {
-            return new ResultResponse(ResultResponseCode.USERNAME_PASSWORD_ERROR, false);
-        }
-    }
-
-    public ResultResponse userRegister(UserVo userVo) {
-        ResultResponse resultResponse = ValidateFieldUtil.userNameValidation(userVo.getUserName());
-        if (!resultResponse.isSuccess()) {
-            return resultResponse;
-        }
-        resultResponse = ValidateFieldUtil.passwordValidation(userVo.getPassword());
-        if (!resultResponse.isSuccess()) {
-            return resultResponse;
-        }
-        Member member = new Member();
-        try {
-            BeanUtils.copyProperties(member, userVo);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        memberDao.create(member);
-        return new ResultResponse(ResultResponseCode.SUCCESS, true);
     }
 
 }
