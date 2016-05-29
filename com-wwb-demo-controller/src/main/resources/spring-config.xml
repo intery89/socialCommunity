@@ -5,7 +5,10 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns="http://www.springframework.org/schema/beans"
+       xmlns:task="http://www.springframework.org/schema/task"  
        xsi:schemaLocation="
+       	http://www.springframework.org/schema/task
+		http://www.springframework.org/schema/task/spring-task-3.1.xsd
           http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans.xsd
           http://www.springframework.org/schema/tx
@@ -23,7 +26,9 @@
 
     <aop:aspectj-autoproxy/>
     <context:annotation-config/>
-
+    
+    <!-- cronJob -->
+	<task:annotation-driven/> 
     <!--applicationContextHelper-->
 
     <!--<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>-->
@@ -58,4 +63,6 @@
         <property name="suffix" value=".html"/>
     </bean>
     <mvc:default-servlet-handler/>
+    
+    
 </beans>

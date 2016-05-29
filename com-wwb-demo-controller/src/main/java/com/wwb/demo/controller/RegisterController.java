@@ -6,18 +6,22 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import com.wwb.demo.service.impl.RegisterService;
-import com.wwb.demo.service.vo.UserVo;
-import com.wwb.demo.utils.ValidateFieldUtil;
-import com.wwb.demo.utils.ValidationCodeGenerator;
-import com.wwb.demo.utils.result.Result;
-import com.wwb.demo.utils.result.ResultResponse;
-import com.wwb.demo.utils.result.enums.ResultResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wwb.demo.service.impl.RegisterService;
+import com.wwb.demo.service.vo.UserVo;
 import com.wwb.demo.utils.MailUtils;
+import com.wwb.demo.utils.ValidateFieldUtil;
+import com.wwb.demo.utils.ValidationCodeGenerator;
+import com.wwb.demo.utils.CommonUtils;
+import com.wwb.demo.utils.result.ResultResponse;
+import com.wwb.demo.utils.result.enums.ResultResponseCode;
 
 @Controller
 public class RegisterController {
@@ -94,19 +98,27 @@ public class RegisterController {
     @RequestMapping(value = "/generateValidateCode")
     public Map<String, String> generateValidationCode(HttpSession session) {
         String realPath = session.getServletContext().getRealPath("/");
+        String date = CommonUtils.getDate(0);
         Map<String, String> result = new HashMap<String, String>();
+        Map<String, String> pastCode = (Map)session.getAttribute("code");
+        if(pastCode != null){
+        	String pastPath = pastCode.getOrDefault("path", pic + date +  "/default.jpg");
+        	ValidationCodeGenerator.removeCodePic(pastPath);
+        }
         try {
-            Map<String, String> codeInfo = ValidationCodeGenerator.generateCode(realPath + pic);
+            Map<String, String> codeInfo = ValidationCodeGenerator.generateCode(realPath + pic + date);
             Map<String, String> code = new HashMap<String, String>();
             code.put("code", codeInfo.get("code"));
+            String path = pic + date + "/" + codeInfo.get("picName") + ".jpg";
+            code.put("path", path);
             code.put("timestamp", String.valueOf(System.currentTimeMillis()));
             session.setAttribute("code", code);
-            result.put("path", pic + codeInfo.get("picName") + ".jpg");
+            result.put("path", path);
             return result;
         } catch (IOException e) {
             e.printStackTrace();
             session.setAttribute("code", "");
-            String path = pic + "default.jpg";
+            String path = pic + date + "/" + "default.jpg";
             result.put("path", path);
             return result;
         }

@@ -280,6 +280,18 @@ public class ValidationCodeGenerator {
         codeInfo.put("picName", picName);
         return codeInfo;
     }
+    
+    public static boolean removeCodePic(String path){
+    	File file = new File(path);
+    	try{
+        	if(file.exists()){
+        		return file.delete();
+        	}
+    	}catch(Exception e){
+    		return false;
+    	}
+    	return true;
+    }
 
     public static void main(String[] args) throws IOException {
         File dir = new File("C:/pic");

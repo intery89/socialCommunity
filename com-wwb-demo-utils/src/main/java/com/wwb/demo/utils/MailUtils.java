@@ -22,8 +22,10 @@ public class MailUtils {
     public static final String HOST = "smtp.163.com";
     public static final String PROTOCOL = "smtp";   
     public static final int PORT = 465;
-    public static final String FROM = "wwb20160528@163.com";//发件人的email
-    public static final String PWD = "wwb2016wwb";//发件人密码
+    public static final String FROM = "inspiration123@163.com";//发件人的email
+    public static final String PWD = "880420wh";//发件人密码
+//    public static final String FROM = "wwb20160528@163.com";//发件人的email
+//    public static final String PWD = "wwb2016wwb";//发件人密码
      
     /**
      * 获取Session
