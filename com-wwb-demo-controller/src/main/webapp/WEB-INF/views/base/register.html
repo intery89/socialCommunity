@@ -5,8 +5,6 @@
     <title>注册</title>
     <script type="text/javascript" src="static/js/jquery-2.2.4.js"></script>
     <script>
-        var emailIsOk=false;
-        var usernameIsOk=false;
         $(document).ready(function () {
             getVerifyCode();
             $("#username").blur(function () {
@@ -18,6 +16,9 @@
         });
         function checkEmail() {
             var email = $("#email").val();
+            if(!email){
+                return false;
+            }
             var url = getRootPath() + "/" + "checkEmail";
             $.ajax({
                 type: 'post',
@@ -26,7 +27,6 @@
                 success: function (data) {
                     $("#emailCheck").empty();
                     if (data.status.code != "0000000") {
-                        emailIsOk=true;
                         $("#emailCheck").text(data.status.msg);
 
                     } else {
@@ -38,6 +38,9 @@
         }
         function checkUserName() {
             var userName = $("#username").val();
+            if(!userName){
+                return false;
+            }
             var url = getRootPath() + "/" + "checkUserName";
             $.ajax({
                 type: 'post',
@@ -46,7 +49,6 @@
                 success: function (data) {
                     $("#usernameCheck").empty();
                     if (data.status.code != "0000000") {
-                        usernameIsOk=true;
                         $("#usernameCheck").text(data.status.msg);
                     } else {
                         $("#usernameCheck").empty();
@@ -85,18 +87,6 @@
             var email = $('#email').val();
             var repeatPassword = $('#repeatPassword').val();
 
-
-
-            if(!usernameIsOk){
-                $("#usernameCheck").empty();
-                $("#usernameCheck").text("请检查用户名是否符合要求！！！");
-            }
-
-            if(!emailIsOk){
-                $("#emailCheck").empty();
-                $("#emailCheck").text("请检查邮箱是否符合要求！！！");
-            }
-
             $("#passwordCheck").empty();
             if (repeatPassword != password) {
                 $("#passwordCheck").text("俩次输入的密码不一致");
@@ -111,16 +101,16 @@
                 data: JSON.stringify(data),
                 success: function (data) {
                     $("#registerCheck").empty();
-                    if (data.status.code != "0000000") {
-                        $("#registerCheck").text(data.status.msg);
+                    alert(data.status.code);
+                    if (data.status.code == "0000000") {
                          window.location.href = data.result.data;
                     } else {
                         $("#registerCheck").empty();
+                        $("#registerCheck").text(data.status.msg);
                         return false;
                     }
                 }
             });
-            return false;
         }
     </script>
 </head>

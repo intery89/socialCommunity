@@ -7,8 +7,10 @@ import com.wwb.demo.utils.ValidateFieldUtil;
 import com.wwb.demo.utils.result.ResultResponse;
 import com.wwb.demo.utils.result.enums.ResultResponseCode;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -17,6 +19,8 @@ import java.lang.reflect.InvocationTargetException;
  */
 @Service
 public class RegisterService {
+    protected final Logger logger = Logger.getLogger(this.getClass());
+
     @Autowired
     private MemberDao memberDao;
 
@@ -33,6 +37,7 @@ public class RegisterService {
             }
             return resultResponse;
         } catch (Exception e) {
+            logger.error(e.getMessage(),e);
             return new ResultResponse(ResultResponseCode.SYSTEM_ERROR, false);
         }
     }
@@ -54,12 +59,14 @@ public class RegisterService {
         }
     }
 
+    @Transactional
     public ResultResponse userRegister(UserVo userVo) {
         Member member = new Member();
         try {
             BeanUtils.copyProperties(member, userVo);
             memberDao.create(member);
         } catch (Exception e) {
+            logger.error(e.toString(),e);
             return new ResultResponse(ResultResponseCode.SYSTEM_ERROR, false);
         }
         return new ResultResponse(ResultResponseCode.SUCCESS, true);

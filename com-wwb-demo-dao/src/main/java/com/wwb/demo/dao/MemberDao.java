@@ -16,17 +16,19 @@ public class MemberDao extends BaseDao<Member> {
         return result.isEmpty() ? null : result.get(0);
     }
     public boolean isUserNameExist(String userName) {
-        String Hql = "select id from Member m where m.userName=:userName";
+        String Hql = "select m.id from Member m where m.userName=:userName and m.status = 0";
         Query query = entityManager.createQuery(Hql);
         query.setParameter("userName", userName);
         query.setMaxResults(1);
-        return query.getSingleResult()==null ? true : false;
+        List<Long> result = query.getResultList();
+        return result.isEmpty() ? false :true;
     }
     public boolean isEmailExist(String email) {
         String Hql = "select id from Member m where m.email=:email";
         Query query = entityManager.createQuery(Hql);
         query.setParameter("email", email);
         query.setMaxResults(1);
-        return query.getSingleResult()==null ? true : false;
+        List<Long> result = query.getResultList();
+        return result.isEmpty() ? false :true;
     }
 }

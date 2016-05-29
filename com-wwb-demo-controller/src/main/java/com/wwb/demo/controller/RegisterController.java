@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+import com.wwb.demo.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,10 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wwb.demo.service.impl.RegisterService;
 import com.wwb.demo.service.vo.UserVo;
-import com.wwb.demo.utils.MailUtils;
-import com.wwb.demo.utils.ValidateFieldUtil;
-import com.wwb.demo.utils.ValidationCodeGenerator;
-import com.wwb.demo.utils.CommonUtils;
 import com.wwb.demo.utils.result.ResultResponse;
 import com.wwb.demo.utils.result.enums.ResultResponseCode;
 
@@ -35,7 +33,7 @@ public class RegisterController {
     @RequestMapping("/register")
     @ResponseBody
     public ResultResponse register(@RequestBody Map<String, String> form, HttpSession session) {
-        String username = form.get("username");
+        String username = form.get("userName");
         String password = form.get("password");
         String code = form.get("code");
         String email = form.get("email");
@@ -62,13 +60,13 @@ public class RegisterController {
         UserVo userVo = new UserVo();
         userVo.setUserName(username);
         userVo.setEmail(email);
-        userVo.setPassword(password);
+        userVo.setPassword(CipherUtils.convertMD5(password));
         resultResponse =  registerService.userRegister(userVo);
         if (!resultResponse.isSuccess()) {
             return resultResponse;
         }
         MailUtils.send(email, "zhaoxiwang-register", registerContent);
-        String url= "loginsuccess?status=0&username="+username+"&email="+email;
+        String url= "loginsuccess";
         return new ResultResponse(ResultResponseCode.SUCCESS,url);
     }
 

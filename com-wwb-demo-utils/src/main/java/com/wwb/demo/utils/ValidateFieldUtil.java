@@ -22,7 +22,7 @@ public class ValidateFieldUtil {
             return new ResultResponse(ResultResponseCode.USERNAME_LENGTH_ERROR, false);
         }
         Pattern pattern = Pattern.compile("^[0-9a-zA-Z_]{1,}$");
-        Matcher matcher = pattern.matcher("userName");
+        Matcher matcher = pattern.matcher(userName);
         if (!matcher.matches()) {
             new ResultResponse(ResultResponseCode.USERNAME_CHARACTER_ERROR, false);
         }
