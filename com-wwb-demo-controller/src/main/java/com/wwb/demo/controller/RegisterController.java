@@ -30,6 +30,11 @@ public class RegisterController {
     @Autowired
     private RegisterService registerService;
 
+    @RequestMapping("/frontPage")
+    public String frontPage() {
+        return "register";
+    }
+
     @RequestMapping("/register")
     @ResponseBody
     public ResultResponse register(@RequestBody Map<String, String> form, HttpSession session) {
