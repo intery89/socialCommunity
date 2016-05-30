@@ -66,7 +66,7 @@ public class RegisterController {
             return resultResponse;
         }
         MailUtils.send(email, "zhaoxiwang-register", registerContent);
-        String url= "loginsuccess";
+        String url= "loginsuccess?status=1";
         return new ResultResponse(ResultResponseCode.SUCCESS,url);
     }
 
