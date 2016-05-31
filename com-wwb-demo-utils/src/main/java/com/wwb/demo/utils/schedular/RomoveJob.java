@@ -2,6 +2,7 @@ package com.wwb.demo.utils.schedular;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Map;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -15,11 +16,29 @@ public class RomoveJob implements CronJob{
 	// run every 
 	@Scheduled(cron="0 0 1 * * ?")
 	@Override
-	public void execute(){
+	public void removePic(){
         try{  
         	String yesterday = CommonUtils.getDate(-1);
         	String path = Constance.pic + yesterday;
         	deleteFile(path);
+        }catch(Exception ex){  
+             ex.printStackTrace();  
+        }  
+   }  
+	
+	// run every 
+	@Scheduled(cron="0 0 2 * * ?")
+	@Override
+	public void removeCode(){
+        try{  
+        	Map<String, Long> codeCache = CommonUtils.codeCache;
+        	Long now = System.currentTimeMillis();
+        	for(Map.Entry<String, Long> entry: codeCache.entrySet()){
+        		Long timestamp = entry.getValue();
+        		if(now - timestamp > 86400){
+        			CommonUtils.codeCache.remove(entry.getKey());
+        		}
+        	}
         }catch(Exception ex){  
              ex.printStackTrace();  
         }  

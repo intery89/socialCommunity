@@ -2,6 +2,7 @@ package com.wwb.demo.utils.schedular;
 
 public interface CronJob {
 
-	public void execute();
+	public void removePic();
 	
+	public void removeCode();
 }

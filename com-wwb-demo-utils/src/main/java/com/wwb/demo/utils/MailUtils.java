@@ -22,10 +22,8 @@ public class MailUtils {
     public static final String HOST = "smtp.163.com";
     public static final String PROTOCOL = "smtp";   
     public static final int PORT = 465;
-    public static final String FROM = "inspiration123@163.com";//发件人的email
-    public static final String PWD = "880420wh";//发件人密码
-//    public static final String FROM = "wwb20160528@163.com";//发件人的email
-//    public static final String PWD = "wwb2016wwb";//发件人密码
+    public static final String FROM = "wwb20160528@163.com";//发件人的email
+    public static final String PWD = "wwb2016wwb";//发件人密码
      
     /**
      * 获取Session
@@ -75,7 +73,7 @@ public class MailUtils {
     }
     
     public static void main(String args[]){
-    	MailUtils.send("wwb20160528@163.com", "zhaoxiwang register", "please click this link to activate your register.\n<a href='http://localhost:8080/com-wwb-demo-controller/register'>激活</a>");
+    	MailUtils.send("inspiration123@163.com", "zhaoxiwang register", "please click this link to activate your register.\n<a href='http://localhost:8080/com-wwb-demo-controller/register'>激活</a>");
     }
  
 }

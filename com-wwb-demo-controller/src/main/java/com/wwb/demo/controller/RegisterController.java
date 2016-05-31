@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.wwb.demo.utils.*;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,8 +27,7 @@ import com.wwb.demo.utils.result.enums.ResultResponseCode;
 public class RegisterController {
     private static final String pic = "/static/code/";
     private static final String defaultEmail = "wwb20160528@163.com";
-    private static final String registerContent = "Please kindly click this link to activate your account in zhaoxiwang.\n<a href='http://localhost:8080/com-wwb-demo-controller/loginsuccess?status=1'>激活</a>";
-
+    
     @Autowired
     private RegisterService registerService;
 
@@ -65,19 +66,28 @@ public class RegisterController {
         if (!resultResponse.isSuccess()) {
             return resultResponse;
         }
-        MailUtils.send(email, "zhaoxiwang-register", registerContent);
+        
+        String randomCode = ValidationCodeGenerator.generateVerifyCode(5);
+        CommonUtils.cache.put(username, randomCode);
+        CommonUtils.codeCache.put(username+randomCode, System.currentTimeMillis());
+        
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("username", username);
+        params.put("code", randomCode);
+        String EmailContent = CommonUtils.generateEmailContent(CommonUtils.generateEmailLink(CommonUtils.link, CommonUtils.getRequestParams(params)));
+        
+        MailUtils.send(email, "zhaoxiwang-register", EmailContent);
         String url= "loginsuccess";
         return new ResultResponse(ResultResponseCode.SUCCESS,url);
     }
 
     @RequestMapping("/loginsuccess")
-    public String loginsuccess(@RequestParam String status) {
-
-        if ("1".equalsIgnoreCase(status)) {
-            return "success";
-        } else {
-            return "reminder";
-        }
+    public String loginsuccess(@RequestParam String username, @RequestParam String code) {
+    	if(CommonUtils.isValid(username, code)){
+    		return "success";
+    	}else{
+    		return "reminder";
+    	}
     }
 
     @RequestMapping(value = "/checkUserName", method = RequestMethod.POST)
