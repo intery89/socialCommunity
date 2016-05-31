@@ -34,16 +34,6 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-
-
-    @RequestMapping("/frontPage")
-    public String hello() {
-        return "register";
-    }
-
-
-
-
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public ResultResponse login(@RequestBody LoginForm user, HttpSession session) {

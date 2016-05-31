@@ -82,9 +82,27 @@
         function register() {
             var url = getRootPath() + "/" + "register";
             var username = $('#username').val();
+
+            if(!username){
+                $("#usernameCheck").empty();
+                $("#usernameCheck").text("用户名非空！！！");
+            }
             var password = $('#password').val();
+            if(!password){
+                $("#passwordCheck").empty();
+                $("#passwordCheck").text("密码非空！！！");
+            }
             var code = $('#code').val();
+
+            if(!code){
+                $("#codeCheck").empty();
+                $("#codeCheck").text("验证码非空！！！");
+            }
             var email = $('#email').val();
+            if(!email){
+                $("#emailCheck").empty();
+                $("#emailCheck").text("email非空！！！");
+            }
             var repeatPassword = $('#repeatPassword').val();
 
             $("#passwordCheck").empty();
